@@ -1,0 +1,13 @@
+{
+  "name": "accounts-bank-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/srthiagofreitas/accounts-bank-api.git",
+  "author": "srtfreitas <thiagoluan17@gmail.com>",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.10.2"
+  }
+}
