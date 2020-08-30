@@ -1,54 +1,17 @@
 import express from "express";
-import { accountModel } from "../models/accountModel.js";
+
+import accountController from "../controllers/accountControler.js";
 
 const app = express();
-app.get("/account", async (req, res) => {
-  const account = await accountModel.find({});
 
-  try {
-    res.send(account);
-  } catch (err) {
-    res.status(500).send(err);
-  }
-});
+app.post("/account", accountController.create);
 
-app.post("/account", async (req, res) => {
-  const account = new accountModel(req.body);
+app.get("/account", accountController.findAll);
 
-  try {
-    await account.save();
-    res.send(account);
-  } catch (err) {
-    res.status(500).send(err);
-  }
-});
+app.get("/account/:id", accountController.findOne);
 
-app.delete("/account/:id", async (req, res) => {
-  try {
-    const account = await accountModel.findOneAndDelete(req.params.id);
+app.put("/account/:id", accountController.update);
 
-    if (!account) {
-      res.status(404).send("Documento nao encontrado");
-    }
-
-    res.status(200).send();
-  } catch (err) {
-    res.status(500).send(err);
-  }
-});
-
-app.patch("/account/:id", async (req, res) => {
-  try {
-    const account = await accountModel.findOneAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true }
-    );
-
-    res.send(account);
-  } catch (err) {
-    res.status(500).send(err);
-  }
-});
+app.delete("/account/:id", accountController.remove);
 
 export { app as accountRouter };
