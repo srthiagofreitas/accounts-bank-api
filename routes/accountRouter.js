@@ -5,6 +5,7 @@ import accountController from "../controllers/accountControler.js";
 const app = express();
 
 app.post("/account", accountController.create);
+app.post("/account/deposit", accountController.createDeposit);
 
 app.get("/account", accountController.findAll);
 

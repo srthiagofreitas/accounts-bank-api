@@ -19,6 +19,24 @@ const create = async (req, res) => {
   }
 };
 
+const createDeposit = async (req, res) => {
+  const { agencia, conta, depositValue } = req.body;
+  try {
+    const account = await Account.findOne({ agencia, conta });
+
+    if (account) {
+      account.balance += parseFloat(depositValue);
+    }
+
+    await Account.updateOne({ _id: account._id }, account);
+
+    //const account = await Account.create({});
+    res.formatter.ok(account);
+  } catch (error) {
+    res.status(500).send("Erro ao criar novo deposito " + error);
+  }
+};
+
 const findAll = async (req, res) => {
   try {
     const data = await Account.find({});
@@ -79,4 +97,4 @@ const remove = async (req, res) => {
   }
 };
 
-export default { create, findAll, findOne, update, remove };
+export default { create, createDeposit, findAll, findOne, update, remove };
